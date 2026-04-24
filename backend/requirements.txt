@@ -33,7 +33,7 @@ groq>=0.5.0
 
 # ─── Vector Store & Embeddings ──────────────────────────────────────────────
 faiss-cpu>=1.7.4
-sentence-transformers>=2.7.0
+# sentence-transformers removed to save memory on Render Free Tier
 numpy>=1.26.0
 
 # ─── Utilities ──────────────────────────────────────────────────────────────
