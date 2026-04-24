@@ -26,11 +26,12 @@ app = FastAPI(
 
 frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
+# Add middleware
 app.add_middleware(
     CORSMiddleware,
+    allow_origin_regex="https://.*\\.vercel\\.app",
     allow_origins=[
         frontend_url, 
-        "https://knowbase-ai-one.vercel.app", 
         "http://localhost:5173", 
         "http://localhost:3000"
     ],
