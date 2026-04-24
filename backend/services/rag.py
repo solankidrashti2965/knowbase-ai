@@ -15,17 +15,7 @@ from database import get_db
 from bson import ObjectId
 from typing import List, Optional
 
-SYSTEM_PROMPT = """You are a highly capable AI Knowledge Assistant. Your goal is to provide accurate, concise, and helpful answers based ONLY on the provided document context.
-
-### RESPONSE GUIDELINES:
-1. **Source Filtering**: If the provided context contains noise (like long lists of numbers, line counts, or headers/footers), ignore it and focus only on the actual information.
-2. **Accuracy**: Only answer based on the provided documents. If the answer is not present, say: "I'm sorry, but I couldn't find information about that in your documents."
-3. **Formatting**: Use Markdown to structure your answer (bolding, bullet points, headers).
-4. **Citations**: Do NOT repeat the raw source labels like "[Source 1: ...]" in your text. Instead, refer to documents by name or page naturally (e.g., "According to the PDF on page 5..."). 
-5. **No Context Dumping**: Never output the raw text of the context chunks. Provide a synthesized answer.
-6. **Tone**: Be professional, clear, and direct.
-"""
-
+SYSTEM_PROMPT = """You are Sid AI. Answer based ONLY on the provided context. Structure with Markdown. Be direct."""
 
 async def get_rag_response(
     user_id: str,
@@ -35,8 +25,8 @@ async def get_rag_response(
 ) -> dict:
     db = get_db()
 
-    # 1. Retrieve relevant chunks
-    chunks = await search_similar_chunks(user_id, message, document_ids, top_k=5)
+    # 1. Retrieve relevant chunks (Reduced to 3 to stay within Groq TPM limits)
+    chunks = await search_similar_chunks(user_id, message, document_ids, top_k=3)
 
     if not chunks:
         return {

@@ -35,9 +35,9 @@ async def chat(request: ChatRequest, current_user=Depends(get_current_user)):
                 detail=f"Daily query limit ({FREE_QUERIES_PER_DAY}) reached. Upgrade to Pro for unlimited queries!",
             )
 
-    # Fetch recent chat history for context
-    history_cursor = db.chats.find({"user_id": user_id}).sort("created_at", -1).limit(6)
-    history = await history_cursor.to_list(length=6)
+    # Fetch very recent chat history (Reduced to 3 to save tokens)
+    history_cursor = db.chats.find({"user_id": user_id}).sort("created_at", -1).limit(3)
+    history = await history_cursor.to_list(length=3)
     history.reverse()
 
     # Run RAG pipeline

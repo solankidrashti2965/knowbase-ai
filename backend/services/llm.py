@@ -24,7 +24,7 @@ async def generate_response(prompt: str) -> str:
     client = _get_client()
     response = await client.chat.completions.create(
         messages=[{"role": "user", "content": prompt}],
-        model="llama-3.1-8b-instant",
+        model="llama-3.3-70b-versatile",
         temperature=0.7,
         max_tokens=2048,
     )
