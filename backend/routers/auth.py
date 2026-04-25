@@ -11,7 +11,7 @@ import os
 
 router = APIRouter()
 security = HTTPBearer()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", truncate_error=False)
 
 SECRET_KEY = os.getenv("JWT_SECRET", "change-this-secret-in-production")
 ALGORITHM = "HS256"
