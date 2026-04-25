@@ -85,11 +85,10 @@ async def signup(user_data: UserCreate):
             ),
         )
     except Exception as e:
-        # Check if it's a connection error or something else
-        error_msg = str(e)
-        if "timeout" in error_msg.lower() or "connect" in error_msg.lower():
-            raise HTTPException(status_code=503, detail="Database connection timed out. Please check your internet or DB whitelist.")
-        raise HTTPException(status_code=500, detail=f"Internal Server Error: {error_msg}")
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"CRITICAL Signup failure: {error_details}")
+        raise HTTPException(status_code=500, detail=f"Backend Error: {str(e)}")
 
 
 @router.post("/login", response_model=Token)
